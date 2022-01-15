@@ -9,9 +9,36 @@
 </head>
 
 <body>
-  <main>
-    <h1>Ed Hoorn App</h1>
+  <main class="centre">
+    <h1>Ed Hoorn</h1>
+    <p class="info">Resterende tijd tot pensioen op:</p>
+    <p class="info">16-4-2022:</p>
+    <p class="info"><span  id="daysleft"></span> dagen of <span  id="hoursleft"></span> uren<p>
+    <p class="info"><span id="minutesleft"></span> minuten <span id="loading"></span></p>
   </main>
 </body>
 
+<script>
+  endDate = new Date();
+  endDate.setFullYear(2022, 0, 16);
+  endDate.setHours(0);
+  endDate.setMinutes(0);
+  endDate.setSeconds(0);
+  setTime();
+  var timer = setInterval(function() {
+    setTime();
+  }, 1000 * 60);
+
+  function setTime() {
+    now = new Date().getTime();
+  timeLeft = endDate.getTime() - now;
+  console.debug("now="+now+"  end="+endDate.getTime()+ "  left="+timeLeft);
+  daysLeft = Math.floor(timeLeft / (24 * 60 *60 * 1000));
+  hoursLeft = Math.floor(timeLeft / (3600 * 1000));
+  minutesLeft = Math.floor(timeLeft / (60 * 1000));
+  document.getElementById("daysleft").innerHTML = daysLeft;
+  document.getElementById("hoursleft").innerHTML = hoursLeft;
+  document.getElementById("minutesleft").innerHTML = minutesLeft;
+  }
+</script>
 </html>
