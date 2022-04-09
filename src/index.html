@@ -9,36 +9,70 @@
 </head>
 
 <body>
-  <main class="centre">
+  <main id="werk" class="centre">
     <h1>Ed Hoorn</h1>
     <p class="info">Resterende tijd tot pensioen op:</p>
     <p class="info">16-4-2022:</p>
     <p class="info"><span  id="daysleft"></span> dagen of <span  id="hoursleft"></span> uren<p>
     <p class="info"><span id="minutesleft"></span> minuten <span id="loading"></span></p>
   </main>
+  <main id="laatstedag" class="centre">
+    <h1>Ed Hoorn</h1>
+    <p class="info">Laatste werkdag !!</p>
+    <p class="info">Morgen ben ik gepensioneerd.</p>
+  </main>
+  <main id="pensioen" class="centre">
+    <h1>Ed Hoorn</h1>
+    <p class="info">Aantal dagen met pensioen sinds 16-4-2022: <span  id="days"></span></p>
+  </main>
 </body>
 
 <script>
-  endDate = new Date();
-  endDate.setFullYear(2022, 3, 16);
-  endDate.setHours(0);
-  endDate.setMinutes(0);
-  endDate.setSeconds(0);
-  setTime();
-  var timer = setInterval(function() {
-    setTime();
-  }, 1000 * 60);
+    endDate = new Date();
+    endDate.setFullYear(2022, 3, 16);
+    endDate.setHours(0);
+    endDate.setMinutes(0);
+    endDate.setSeconds(0);
+    today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
 
-  function setTime() {
-    now = new Date().getTime();
-  timeLeft = endDate.getTime() - now;
-  console.debug("now="+now+"  end="+endDate.getTime()+ "  left="+timeLeft);
-  daysLeft = Math.floor(timeLeft / (24 * 60 *60 * 1000));
-  hoursLeft = Math.floor(timeLeft / (3600 * 1000));
-  minutesLeft = Math.floor(timeLeft / (60 * 1000));
-  document.getElementById("daysleft").innerHTML = daysLeft;
-  document.getElementById("hoursleft").innerHTML = hoursLeft;
-  document.getElementById("minutesleft").innerHTML = minutesLeft;
-  }
+    if (today.getTime() < endDate.getTime()) {
+      document.getElementById('werk').style.display = "block";
+      setTimeUntil();
+      var timer = setInterval(function () {
+        setTime();
+      }, 1000 * 60);
+    }
+
+    if (today.getTime() == endDate.getTime()) {
+      document.getElementById('laatstedag').style.display = "block";
+    }
+
+    if (today.getTime() > endDate.getTime()) {
+      document.getElementById('pensioen').style.display = "block";
+      setTimeFrom();
+    }
+
+    function setTimeUntil() {
+      now = new Date().getTime();
+      timeLeft = endDate.getTime() - now;
+      console.debug("now=" + now + "  end=" + endDate.getTime() + "  left=" + timeLeft);
+      daysLeft = Math.floor(timeLeft / (24 * 60 * 60 * 1000));
+      hoursLeft = Math.floor(timeLeft / (3600 * 1000));
+      minutesLeft = Math.floor(timeLeft / (60 * 1000));
+      document.getElementById("daysleft").innerHTML = daysLeft;
+      document.getElementById("hoursleft").innerHTML = hoursLeft;
+      document.getElementById("minutesleft").innerHTML = minutesLeft;
+    }
+
+    function setTimeFrom() {
+      now = new Date().getTime();
+      timeFrom = today.getTime() - endDate.getTime();
+      console.debug("now=" + now + "  end=" + endDate.getTime() + "  from=" + timeFrom);
+      days = Math.floor(timeFrom / (24 * 60 * 60 * 1000));
+      document.getElementById("days").innerHTML = days;
+    }
 </script>
 </html>
