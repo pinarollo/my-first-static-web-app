@@ -42,7 +42,8 @@
       document.getElementById('werk').style.display = "block";
       setTimeUntil();
       var timer = setInterval(function () {
-        setTime();
+        setTimeUntil();
+        setTimeFrom();
       }, 1000 * 60);
     }
 
